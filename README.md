@@ -16,7 +16,7 @@ The application is designed using cloud-native services and follows best practic
 
 ## 🏗️ Architecture
 
-![Architecture](Portfolio Website.png)
+![Architecture](architecture.png)
 
 ### 🔄 Application Flow
 
@@ -103,6 +103,7 @@ The application is designed using cloud-native services and follows best practic
 
 ## 📁 Project Structure
 
+'''
 aws-serverless-portfolio/
 │
 ├── frontend/
@@ -115,6 +116,7 @@ aws-serverless-portfolio/
 ├── Portfolio Architecture.png
 ├── README.md
 
+'''
 ---
 
 ## 🧪 How to Run (High-Level)

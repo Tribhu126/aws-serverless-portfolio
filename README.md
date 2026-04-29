@@ -18,6 +18,7 @@ The application is designed using cloud-native services and follows best practic
 
 ![Architecture](architecture.png)
 
+
 ### 🔄 Application Flow
 
 1. User accesses the website via Amazon CloudFront (HTTPS)
@@ -103,7 +104,7 @@ The application is designed using cloud-native services and follows best practic
 
 ## 📁 Project Structure
 
-'''
+```
 aws-serverless-portfolio/
 │
 ├── frontend/
@@ -113,10 +114,9 @@ aws-serverless-portfolio/
 ├── backend/
 │   ├── lambda_function.py
 │
-├── Portfolio Architecture.png
+├── architecture.png
 ├── README.md
-
-'''
+```
 ---
 
 ## 🧪 How to Run (High-Level)

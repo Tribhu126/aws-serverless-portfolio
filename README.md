@@ -20,6 +20,8 @@ The system is designed using cloud-native services and follows best practices su
 
 ![Architecture](architecture.png)
 
+---
+
 ### 🔄 Application Flow
 
 1. User accesses the website via Amazon CloudFront (HTTPS)

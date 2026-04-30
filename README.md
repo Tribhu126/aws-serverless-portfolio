@@ -18,6 +18,8 @@ The application features a modern, responsive frontend combined with a serverles
 
 ![Architecture](architecture.png)
 
+---
+
 ### 🔄 Application Flow
 
 1. User accesses the website via Amazon CloudFront (HTTPS)

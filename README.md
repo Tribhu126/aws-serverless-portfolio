@@ -140,6 +140,6 @@ Aspiring Solutions Consultant / Pre-Sales Engineer
 
 ## 📸 Portfolio Preview
 
-![Portfolio Website Screenshot](Portfolio Website Screenshot.png)
+![Portfolio Website Screenshot](Portfolio_Website_Screenshot.png)
 
 

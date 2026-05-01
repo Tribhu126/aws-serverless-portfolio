@@ -1,6 +1,6 @@
 # AWS Serverless Portfolio Website
 
-## 🚀 Overview
+##  Overview
 
 This project is a fully serverless web application built on AWS. It demonstrates how modern cloud-native architectures can be used to build scalable, cost-efficient, and event-driven applications.
 
@@ -8,19 +8,19 @@ The application features a modern, responsive frontend combined with a serverles
 
 ---
 
-## 🌐 Live Demo
+##  Live Demo
 
-👉 https://d2ur4gm3dnah1e.cloudfront.net/
+ https://d2ur4gm3dnah1e.cloudfront.net/
 
 ---
 
-## 🏗️ Architecture
+##  Architecture
 
 ![Architecture](architecture.png)
 
 ---
 
-### 🔄 Application Flow
+###  Application Flow
 
 1. User accesses the website via Amazon CloudFront (HTTPS)
 2. Static frontend is served from Amazon S3
@@ -40,7 +40,7 @@ The application features a modern, responsive frontend combined with a serverles
 
 ---
 
-## 🧰 Tech Stack
+##  Tech Stack
 
 | Service            | Purpose                |
 | ------------------ | ---------------------- |
@@ -54,7 +54,7 @@ The application features a modern, responsive frontend combined with a serverles
 
 ---
 
-## ✨ Features
+##  Features
 
 * Fully serverless architecture
 * Responsive, modern UI with animations
@@ -66,7 +66,7 @@ The application features a modern, responsive frontend combined with a serverles
 
 ---
 
-## 🔐 Security
+##  Security
 
 * Least-privilege IAM policies
 * Restricted DynamoDB access (PutItem, UpdateItem, GetItem)
@@ -76,7 +76,7 @@ The application features a modern, responsive frontend combined with a serverles
 
 ---
 
-## 🧠 Key Learnings
+##  Key Learnings
 
 * Designing serverless architectures using AWS
 * Building REST APIs using API Gateway and Lambda
@@ -89,7 +89,7 @@ The application features a modern, responsive frontend combined with a serverles
 
 ---
 
-## ⚠️ Challenges Faced
+##  Challenges Faced
 
 * API returning "Not Found" due to route configuration
 * IAM permission issues affecting DynamoDB access
@@ -101,7 +101,7 @@ The application features a modern, responsive frontend combined with a serverles
 
 ---
 
-## 🔮 Future Improvements
+##  Future Improvements
 
 * Implement auto-reply emails using Amazon SES
 * Add custom domain using Route 53
@@ -111,7 +111,7 @@ The application features a modern, responsive frontend combined with a serverles
 
 ---
 
-## 📁 Project Structure
+##  Project Structure
 
 ```
 aws-serverless-portfolio/
@@ -130,7 +130,7 @@ aws-serverless-portfolio/
 
 ---
 
-## 📌 Author
+##  Author
 
 **Tribhuvan Sharma**
 AWS Certified Solutions Architect
@@ -138,7 +138,7 @@ Aspiring Solutions Consultant / Pre-Sales Engineer
 
 ---
 
-## 📸 Portfolio Preview
+##  Portfolio Preview
 
 ![Portfolio Website Screenshot](Portfolio_Website_Screenshot.png)
 

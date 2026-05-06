@@ -1,4 +1,4 @@
-# AWS Serverless Portfolio Website
+# AWS Serverless 3-Tier Portfolio Website
 
 # Overview
 
@@ -78,7 +78,7 @@ The application features a modern, responsive frontend combined with a serverles
 
 # Key Learnings
 
-* Designing serverless architectures using AWS
+* Designing serverless 3-tier architectures using AWS
 * Building REST APIs using API Gateway and Lambda
 * Using DynamoDB for both storage and atomic counters
 * Preventing duplicate visitor counts using frontend logic
@@ -107,7 +107,7 @@ The application features a modern, responsive frontend combined with a serverles
 * Add custom domain using Route 53
 * Implement CI/CD pipeline (GitHub Actions)
 * Add authentication using Amazon Cognito
-* Expand project portfolio (3-tier architecture)
+* Expand project portfolio (scalable, highly available and secure architecture)
 
 ---
 

@@ -46,10 +46,10 @@ The application features a modern, responsive frontend combined with a serverles
 | Service            | Purpose                |
 | ------------------ | ---------------------- |
 | Amazon S3          | Static website hosting |
-| Amazon CloudFront  | CDN + HTTPS            |
-| Amazon API Gateway | REST endpoints         |
-| AWS Lambda         | Backend logic          |
-| Amazon DynamoDB    | Data storage           |
+| Amazon CloudFront  | CDN + HTTPS delivery   |
+| Amazon API Gateway (HTTP API) | Serverless HTTP endpoints         |
+| AWS Lambda         | Backend business logic          |
+| Amazon DynamoDB    | Visitor tracking and contact storage           |
 | Amazon SNS         | Email notifications    |
 | Amazon CloudWatch  | Logging & monitoring   |
 

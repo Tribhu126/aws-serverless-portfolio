@@ -17,6 +17,7 @@ The application features a modern, responsive frontend combined with a serverles
 # Architecture
 
 ![Architecture](architecture.png)
+> The visitor counter includes lightweight anti-inflation protection using browser cooldown logic, custom API request validation, and API Gateway CORS controls.
 
 ---
 
@@ -63,6 +64,11 @@ The application features a modern, responsive frontend combined with a serverles
 * Event-driven email notifications via SNS
 * CloudWatch logging for observability
 * Clean separation of frontend and backend
+* Visitor counter protected against artificial refresh inflation
+* Custom header validation to reduce bot/crawler-triggered increments
+* Browser cooldown logic using localStorage
+* API Gateway CORS preflight handling for secure frontend-backend communication
+
 
 ---
 
@@ -73,6 +79,17 @@ The application features a modern, responsive frontend combined with a serverles
 * HTTPS via CloudFront
 * CORS configured in API Gateway
 * Input validation in Lambda
+  
+### Visitor Counter Protection
+
+The visitor counter implementation includes lightweight abuse protection mechanisms:
+
+* Browser-side cooldown logic prevents repeated refreshes from incrementing the counter
+* Custom request headers restrict direct API access
+* API Gateway CORS configuration controls frontend-originated requests
+* Separate read-only and increment flows reduce accidental counter inflation
+
+These protections help reduce artificial traffic from refreshes, bots, and direct API calls while keeping the architecture fully serverless.
 
 ---
 
@@ -81,7 +98,7 @@ The application features a modern, responsive frontend combined with a serverles
 * Designing serverless 3-tier architectures using AWS
 * Building REST APIs using API Gateway and Lambda
 * Using DynamoDB for both storage and atomic counters
-* Preventing duplicate visitor counts using frontend logic
+* Designing lightweight visitor tracking protection using browser cooldown logic, custom request headers, and API Gateway CORS controls
 * Handling JSON serialization issues (Decimal)
 * Debugging CORS and API integration issues
 * Implementing event-driven architecture using SNS
@@ -98,6 +115,10 @@ The application features a modern, responsive frontend combined with a serverles
 * Decimal serialization issues in responses
 * Preventing duplicate visitor counts
 * Frontend-backend integration debugging
+* Browser CORS preflight (`OPTIONS`) issues after introducing custom headers
+* Visitor counter inflation caused by bot/crawler traffic and multiple domain access
+* Debugging CloudFront cache invalidation after frontend updates
+* Handling browser localStorage behavior across root and subdomains
 
 ---
 
@@ -108,6 +129,10 @@ The application features a modern, responsive frontend combined with a serverles
 * Implement CI/CD pipeline (GitHub Actions)
 * Add authentication using Amazon Cognito
 * Expand project portfolio (scalable, highly available and secure architecture)
+* Replace frontend cooldown logic with backend session/IP-based tracking
+* Add AWS WAF for bot protection
+* Implement analytics-grade visitor tracking
+* Use CloudFront Functions or Lambda@Edge for request validation
 
 ---
 

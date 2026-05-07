@@ -10,7 +10,7 @@ The application features a modern, responsive frontend combined with a serverles
 
 # Live Demo
 
- https://www.tribhuvansharma.com/
+ https://tribhuvansharma.com/
 
 ---
 

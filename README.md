@@ -157,8 +157,8 @@ aws-serverless-portfolio/
 
 # Author
 
-**Tribhuvan Sharma**
-AWS Certified Solutions Architect
+**Tribhuvan Sharma**  
+AWS Certified Solutions Architect  
 Aspiring Solutions Consultant / Pre-Sales Engineer
 
 ---

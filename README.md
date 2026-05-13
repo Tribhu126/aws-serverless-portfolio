@@ -1,144 +1,264 @@
-# AWS Serverless 3-Tier Portfolio Website
+# AWS Serverless Portfolio Website
 
 # Overview
 
-This project is a fully serverless web application built on AWS. It demonstrates how modern cloud-native architectures can be used to build scalable, cost-efficient, and event-driven applications.
+This project is a fully serverless AWS web application designed to demonstrate modern cloud-native architecture patterns using managed AWS services.
 
-The application features a modern, responsive frontend combined with a serverless backend that handles real-time form submissions, visitor tracking, and email notifications.
+The application combines a responsive frontend with a serverless backend capable of handling:
+
+- visitor tracking
+- contact form submissions
+- event-driven notifications
+- lightweight API protection
+- backend-controlled visitor validation
+
+The project evolved significantly through multiple architectural improvements focused on scalability, security, and realistic visitor tracking behavior.
 
 ---
 
 # Live Demo
 
- https://tribhuvansharma.com/
+https://tribhuvansharma.com/
 
 ---
 
 # Architecture
 
 ![Architecture](architecture.png)
-> The visitor counter includes lightweight anti-inflation protection using browser cooldown logic, custom API request validation, and API Gateway CORS controls.
+
+### Architecture Flow
+
+User  
+→ Route 53  
+→ CloudFront  
+→ S3 Static Frontend  
+→ API Gateway (HTTP API)  
+→ Lambda  
+→ DynamoDB  
+→ SNS  
 
 ---
 
 # Application Flow
 
-1. User accesses the website via Amazon CloudFront (HTTPS)
-2. Static frontend is served from Amazon S3
-3. On page load:
+## Website Access
 
-   * API Gateway triggers Lambda (`GET /visits`)
-   * DynamoDB updates or retrieves visitor count
-4. User submits the contact form:
+1. User accesses the website through Amazon CloudFront using HTTPS
+2. CloudFront serves the static frontend hosted in Amazon S3
 
-   * API Gateway triggers Lambda (`POST /contact`)
-5. Lambda:
+---
 
-   * Validates input
-   * Stores data in DynamoDB
-   * Sends notification via SNS
-6. Response is returned to frontend
+## Visitor Counter Flow
+
+1. Frontend calls:
+   - `GET /visits`
+2. API Gateway triggers AWS Lambda
+3. Lambda:
+   - validates custom request headers
+   - checks visitor cooldown state
+   - validates visitor IP against DynamoDB
+4. DynamoDB:
+   - retrieves existing visitor count
+   - conditionally increments the counter
+5. Updated visitor count is returned to frontend
+
+---
+
+## Contact Form Flow
+
+1. User submits contact form
+2. Frontend calls:
+   - `POST /contact`
+3. API Gateway triggers Lambda
+4. Lambda:
+   - validates request body
+   - stores submission in DynamoDB
+   - publishes SNS notification
+5. SNS sends email notification
 
 ---
 
 # Tech Stack
 
-| Service            | Purpose                |
-| ------------------ | ---------------------- |
-| Amazon S3          | Static website hosting |
-| Amazon CloudFront  | CDN + HTTPS delivery   |
-| Amazon API Gateway (HTTP API) | Serverless HTTP endpoints         |
-| AWS Lambda         | Backend business logic          |
-| Amazon DynamoDB    | Visitor tracking and contact storage           |
-| Amazon SNS         | Email notifications    |
-| Amazon CloudWatch  | Logging & monitoring   |
+| Service | Purpose |
+|---|---|
+| Amazon S3 | Static website hosting |
+| Amazon CloudFront | CDN + HTTPS delivery |
+| Amazon Route 53 | DNS management |
+| Amazon API Gateway (HTTP API) | Serverless HTTP endpoints |
+| AWS Lambda | Backend business logic |
+| Amazon DynamoDB | Visitor tracking + contact storage |
+| Amazon SNS | Email notifications |
+| Amazon CloudWatch | Logging & monitoring |
+| AWS IAM | Access control |
 
 ---
 
-# Features
+# Key Features
 
-* Fully serverless architecture
-* Responsive, modern UI with animations
-* Contact form with validation (frontend + backend)
-* Visitor counter using DynamoDB
-* Event-driven email notifications via SNS
-* CloudWatch logging for observability
-* Clean separation of frontend and backend
-* Visitor counter protected against artificial refresh inflation
-* Custom header validation to reduce bot/crawler-triggered increments
-* Browser cooldown logic using localStorage
-* API Gateway CORS preflight handling for secure frontend-backend communication
-
+- Fully serverless AWS architecture
+- Responsive frontend portfolio website
+- HTTPS delivery using CloudFront + ACM
+- Contact form with frontend and backend validation
+- DynamoDB-based visitor tracking
+- SNS email notifications
+- CloudWatch logging and monitoring
+- API Gateway HTTP API integration
+- Custom API request validation
+- Browser cooldown optimization
+- Backend IP-based visitor cooldown logic
+- CORS preflight handling
+- Canonical domain handling
+- Lightweight bot/crawler protection
 
 ---
 
-# Security
+# Visitor Tracking Design
 
-* Least-privilege IAM policies
-* Restricted DynamoDB access (PutItem, UpdateItem, GetItem)
-* HTTPS via CloudFront
-* CORS configured in API Gateway
-* Input validation in Lambda
-  
-### Visitor Counter Protection
+The visitor counter uses a layered protection model to reduce artificial counter inflation while maintaining a lightweight serverless design.
 
-The visitor counter implementation includes lightweight abuse protection mechanisms:
+## Frontend Protection Layer
 
-* Browser-side cooldown logic prevents repeated refreshes from incrementing the counter
-* Custom request headers restrict direct API access
-* API Gateway CORS configuration controls frontend-originated requests
-* Separate read-only and increment flows reduce accidental counter inflation
+The frontend implements:
 
-These protections help reduce artificial traffic from refreshes, bots, and direct API calls while keeping the architecture fully serverless.
+- browser localStorage cooldown logic
+- read-only mode for repeated visits
+- reduced unnecessary API calls
+
+This prevents repeated page refreshes from incrementing the counter continuously.
+
+---
+
+## Backend Protection Layer
+
+Lambda performs backend-controlled visitor validation using:
+
+- source IP extraction
+- DynamoDB-based visitor tracking
+- 24-hour cooldown validation
+
+This significantly improves visitor count realism compared to frontend-only tracking.
+
+---
+
+## API Protection Layer
+
+The API includes additional protection mechanisms:
+
+- custom request header validation
+- CORS preflight handling
+- restricted direct API access
+
+This helps reduce casual bot/crawler-triggered increments and direct endpoint abuse.
+
+---
+
+# Architectural Evolution
+
+The visitor tracking system evolved through multiple iterations during development.
+
+## Initial Implementation
+
+Originally:
+- every refresh incremented the visitor count
+- visitor numbers inflated rapidly
+
+---
+
+## Problems Identified
+
+### 1. Frontend Refresh Inflation
+Repeated browser refreshes continuously incremented the counter.
+
+### 2. Multi-Domain localStorage Separation
+Separate localStorage behavior between:
+
+- `tribhuvansharma.com`
+- `www.tribhuvansharma.com`
+
+caused duplicate counting.
+
+### 3. Direct API Access
+Bots and crawlers could directly hit the API endpoint.
+
+---
+
+## Final Solution
+
+The implementation evolved into a layered architecture including:
+
+1. Canonical domain enforcement
+2. Browser cooldown logic
+3. Custom request header validation
+4. API Gateway CORS configuration
+5. Backend IP-based cooldown validation using DynamoDB
+
+This significantly improved visitor count realism while preserving a fully serverless design.
+
+---
+
+# Security Considerations
+
+- HTTPS enforced via CloudFront + ACM
+- Least-privilege IAM policies
+- Restricted DynamoDB permissions
+- Input validation inside Lambda
+- API protection using custom headers
+- CORS preflight handling implemented
+- Backend-controlled visitor validation
+- Separate read-only visitor retrieval logic
 
 ---
 
 # Key Learnings
 
-* Designing serverless 3-tier architectures using AWS
-* Building REST APIs using API Gateway and Lambda
-* Using DynamoDB for both storage and atomic counters
-* Designing lightweight visitor tracking protection using browser cooldown logic, custom request headers, and API Gateway CORS controls
-* Handling JSON serialization issues (Decimal)
-* Debugging CORS and API integration issues
-* Implementing event-driven architecture using SNS
-* Improving UI/UX for technical portfolios
+- Designing serverless AWS architectures
+- Using API Gateway HTTP API with Lambda
+- Building event-driven applications using SNS
+- Implementing DynamoDB atomic counters
+- Designing layered visitor tracking protection
+- Understanding frontend vs backend validation tradeoffs
+- Handling CORS preflight (`OPTIONS`) requests
+- Debugging CloudFront cache invalidation
+- Managing browser localStorage behavior
+- Implementing lightweight bot protection techniques
+- Designing backend-controlled visitor tracking systems
 
 ---
 
 # Challenges Faced
 
-* API returning "Not Found" due to route configuration
-* IAM permission issues affecting DynamoDB access
-* SNS subscription auto-deactivation
-* Lambda errors due to incorrect event handling
-* Decimal serialization issues in responses
-* Preventing duplicate visitor counts
-* Frontend-backend integration debugging
-* Browser CORS preflight (`OPTIONS`) issues after introducing custom headers
-* Visitor counter inflation caused by bot/crawler traffic and multiple domain access
-* Debugging CloudFront cache invalidation after frontend updates
-* Handling browser localStorage behavior across root and subdomains
+- API route configuration issues
+- DynamoDB IAM permission errors
+- SNS subscription auto-deactivation
+- Lambda event structure debugging
+- Decimal JSON serialization issues
+- Preventing duplicate visitor increments
+- Browser CORS preflight failures
+- CloudFront caching delays
+- localStorage inconsistencies across domains
+- Direct API access protection
+- Bot/crawler-triggered visitor inflation
+- Python indentation and Lambda control flow debugging
 
 ---
 
 # Future Improvements
 
-* Implement auto-reply emails using Amazon SES
-* Add custom domain using Route 53
-* Implement CI/CD pipeline (GitHub Actions)
-* Add authentication using Amazon Cognito
-* Expand project portfolio (scalable, highly available and secure architecture)
-* Replace frontend cooldown logic with backend session/IP-based tracking
-* Add AWS WAF for bot protection
-* Implement analytics-grade visitor tracking
-* Use CloudFront Functions or Lambda@Edge for request validation
+- Implement DynamoDB TTL for automatic visitor cleanup
+- Add AWS WAF integration
+- Implement CI/CD pipeline using GitHub Actions
+- Add authentication using Amazon Cognito
+- Implement analytics-grade visitor tracking
+- Use CloudFront Functions or Lambda@Edge
+- Infrastructure as Code using Terraform
+- Add ECS/Fargate-based containerized workloads
 
 ---
 
 # Project Structure
 
-```
+```text
 aws-serverless-portfolio/
 │
 ├── frontend/

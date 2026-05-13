@@ -27,6 +27,7 @@ https://tribhuvansharma.com/
 ![Architecture](architecture.png)
 > The visitor tracking system uses layered frontend and backend protection mechanisms including browser cooldown optimization, IP-based validation using DynamoDB, custom API request validation, and API Gateway CORS controls.
 
+
 ### Architecture Flow
 
 User  

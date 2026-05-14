@@ -2,7 +2,7 @@
 
 # Overview
 
-This project is a fully serverless AWS web application designed to demonstrate modern cloud-native architecture patterns using managed AWS services.
+This project is a fully serverless 3-tier AWS web application designed to demonstrate modern cloud-native architecture patterns using managed AWS services.
 
 The application combines a responsive frontend with a serverless backend capable of handling:
 
@@ -27,6 +27,10 @@ https://tribhuvansharma.com/
 ![Architecture](architecture.png)
 > The visitor tracking system uses layered frontend and backend protection mechanisms including browser cooldown optimization, IP-based validation using DynamoDB, custom API request validation, and API Gateway CORS controls.
 
+Serverless 3-tier architecture using:
+- Presentation Layer
+- Application Layer
+- Data Layer
 
 ### Architecture Flow
 
